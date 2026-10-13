@@ -38,7 +38,8 @@
       <li><a href="#keyboard">A keyboard that matches the PC</a></li>
       <li><a href="#shortcuts">Shortcuts with names</a></li>
       <li><a href="#mouse">The mouse pad</a></li>
-      <li><a href="#tray">Buttons, scripts and the typed line</a></li>
+      <li><a href="#tray">Buttons and scripts</a></li>
+      <li><a href="#typed">The typed line</a></li>
       <li><a href="#dictation">Dictation</a></li>
       <li><a href="#repair">Repairing text</a></li>
       <li><a href="#devices">Several devices</a></li>
@@ -254,7 +255,7 @@
     ignores touches, so a palm or a thumb landing on it mid-sentence does not click somewhere else in
     your document.</p>
 
-  <h2 id="tray">Buttons, scripts and the typed line</h2>
+  <h2 id="tray">Buttons and scripts</h2>
   <p>Beside the small pad is a tray, like the row a laptop keeps above its digits:</p>
   <ul>
     <li>a <strong>volume knob</strong>: turn it to change the volume, tap it to mute;</li>
@@ -277,11 +278,70 @@ Enter</code></pre>
     <li>no coordinates, because a click at a fixed point is how recorded macros rot.</li>
   </ul>
   <p>A script stops within one step when you press Stop.</p>
-  <p>Typing on glass means watching the keys, not the screen. So a line at the foot of the tray, just above the
-    keys, shows <strong>the last few dozen characters you typed</strong>, with the cursor, as the PC should
-    now have them. It follows arrows, word jumps, selections and Backspace. It is what the tablet sent, not
-    text read back from the PC, so it clears itself whenever the PC's text may have changed without a key
-    from the tablet: a click, a paste, dictation, another window.</p>
+  <h2 id="typed">The typed line</h2>
+  <p>Glass has no feel, so while you type your eyes are on the tablet, not on the PC's screen, and
+    a typo stays unnoticed until you look up. A strip over the foot of the tray, just above the
+    keys, shows <strong>what you just typed into the PC</strong>, with the cursor. You can check a word
+    without looking away from the keys.</p>
+
+  <figure class="strips">
+    <div class="strip" aria-hidden="true">Hi<span class="faint">·</span>Anna,<span class="faint">·</span>thanks<span class="faint">·</span>for<span class="faint">·</span>the<span class="faint">·</span>note<span class="last">s</span><span class="caret"></span></div>
+    <figcaption>Typing. The last letter you typed is in colour, the cursor is a bar, and a space shows as a faint dot.</figcaption>
+    <div class="strip" aria-hidden="true">Hi<span class="faint">·</span>Anna,<span class="faint">·</span>thanks<span class="faint">·</span>for<span class="faint">·</span><span class="caret"></span>the<span class="faint">·</span>notes</div>
+    <figcaption>After <kbd>Ctrl</kbd>+<kbd>←</kbd>: the cursor jumped back a word. The strip follows the cursor
+      through the text you typed.</figcaption>
+    <div class="strip" aria-hidden="true">Hi<span class="faint">·</span>Anna,<span class="faint">·</span>thanks<span class="faint">·</span>for<span class="faint">·</span><span class="sel">t</span><span class="sel">h</span><span class="sel">e</span><span class="sel faint">·</span><span class="caret"></span>notes</div>
+    <figcaption>After <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd>: the selected word is shaded. Typing now
+      replaces it, and <kbd>⌫</kbd> deletes it, and the strip shows that too.</figcaption>
+    <div class="strip" aria-hidden="true">Hi<span class="faint">·</span>Anna,<span class="faint">↵</span><span class="faint">↵</span>Thanks<span class="last">!</span><span class="caret"></span></div>
+    <figcaption>Enter shows as ↵, so a new paragraph is visible. Tab shows as →.</figcaption>
+    <figcaption class="note">Illustrations, drawn the way the app draws the strip.</figcaption>
+  </figure>
+
+  <h3>What it follows</h3>
+  <table>
+    <thead><tr><th>Key</th><th>On the strip</th></tr></thead>
+    <tbody>
+      <tr><td>Letters, digits, symbols, Space, Enter, Tab</td><td>Inserted at the cursor; the newest one is in colour</td></tr>
+      <tr><td><kbd>←</kbd> <kbd>→</kbd></td><td>The cursor moves one character</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>←</kbd> <kbd>Ctrl</kbd>+<kbd>→</kbd></td><td>The cursor jumps a word, the way Windows text boxes do</td></tr>
+      <tr><td><kbd>Shift</kbd> with any of those, or a slide along Space with Shift</td><td>A selection grows, shaded; an arrow without Shift lands on its edge</td></tr>
+      <tr><td><kbd>⌫</kbd> <kbd>Del</kbd>, also with <kbd>Ctrl</kbd> for a whole word</td><td>Characters disappear; with a selection, the selection does</td></tr>
+      <tr><td><kbd>Home</kbd> <kbd>End</kbd></td><td>The cursor goes to the start or end of the line, if the line break is on the strip</td></tr>
+      <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd>, <kbd>Esc</kbd>, Caps Lock, volume and media keys</td><td>Nothing changes: they leave the text alone</td></tr>
+    </tbody>
+  </table>
+  <p>It shows the few dozen characters around the cursor, as many as fit. Like a text box, it scrolls only
+    when the cursor nears an edge, so it stays still enough to read while you move around. Eight seconds
+    after the last key it fades out, so the tray is never covered for longer than you type. It ignores
+    touches: a finger on it lands on the tray button underneath.</p>
+
+  <h3>Why it sometimes empties</h3>
+  <p>The strip is built from <strong>what the tablet sent</strong>. Nothing is read back from the PC: your
+    text never travels from the PC to the tablet, and that is a privacy rule, not an omission. The price is
+    that the tablet cannot see changes it did not make. So whenever the PC's text may have changed some other
+    way, the strip starts again empty instead of showing something that may be wrong:</p>
+  <ul>
+    <li>a click or a drag on the mouse pad, which can put the cursor anywhere;</li>
+    <li>another program or another window coming to the front (an editor marking the title as unsaved, like
+      Notepad's <code>*</code>, still counts as the same window);</li>
+    <li><kbd>↑</kbd> or <kbd>↓</kbd>, <kbd>PgUp</kbd> or <kbd>PgDn</kbd>, and <kbd>Ctrl</kbd>+<kbd>Home</kbd>
+      or <kbd>End</kbd>, which leave the line the strip knows;</li>
+    <li><kbd>←</kbd> past the first character it saw, or <kbd>Home</kbd> or <kbd>End</kbd> with no line
+      break on the strip to stop at, because the cursor has gone into text typed before;</li>
+    <li>a paste, <kbd>Ctrl</kbd>+<kbd>Z</kbd> and other shortcuts, and any <kbd>Alt</kbd> or <kbd>Win</kbd>
+      chord, because they belong to the program and the strip cannot know what they did;</li>
+    <li>dictation, a text repair, or a spelling answer, which change the text on the PC itself;</li>
+    <li>switching between Wi-Fi and Bluetooth, or reconnecting.</li>
+  </ul>
+  <p>It fills again from the next key. An honestly short strip is better than one that is quietly wrong.</p>
+
+  <h3>Where it shows, and where to switch it off</h3>
+  <p>It works over both Wi-Fi and Bluetooth, because it records what was sent, whichever way it went. Over
+    Bluetooth alone the PC tells the tablet nothing, so a window changed with the PC's own mouse or keyboard
+    goes unnoticed until the next click from the tablet. It stays out of the way while the full-size pad,
+    Compose or the spelling question is on screen. To turn it off: Settings → Typing → <strong>Show what is
+    being typed</strong>.</p>
 
   <h2 id="dictation">Dictation</h2>
   <p>Tap 🎤 and talk. A level meter moves with your voice, and the words appear on the tablet as the PC

@@ -106,3 +106,23 @@ pre { background: var(--surface); border: 1px solid var(--border); border-radius
   table { display: block; overflow-x: auto; }
   figure.wide, .cards.wide { margin-left: 0; margin-right: 0; }
 }
+
+figure.strips { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 18px 18px 12px; }
+.strip {
+  --key: #d9dde3; --ink: #3a4048; --accent: #5d6b3a;
+  font: 22px/44px ui-monospace, "Cascadia Mono", Consolas, monospace; color: var(--ink);
+  background: var(--key); border: 1px solid #b9bec6; border-radius: 10px;
+  height: 46px; padding: 0 12px; white-space: pre; overflow: hidden; margin-top: 6px;
+}
+.strip .faint { opacity: 0.35; }
+.strip .last { color: var(--accent); font-weight: 700; }
+.strip .sel { background: color-mix(in srgb, var(--accent) 35%, transparent); }
+.strip .caret { display: inline-block; width: 2px; height: 26px; margin: 0 -1px; background: var(--ink); vertical-align: -5px; }
+figure.strips figcaption { text-align: left; margin: 6px 0 14px; }
+figure.strips figcaption.note { font-style: italic; margin-bottom: 0; }
+@media (prefers-color-scheme: dark) {
+  .strip { --key: #3a3f46; --ink: #e3e6ea; --accent: #b5c77f; border-color: #50565e; }
+}
+@media (max-width: 520px) {
+  .strip { font-size: 15px; }
+}
