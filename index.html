@@ -332,9 +332,38 @@ Enter</code></pre>
     <li>a paste, <kbd>Ctrl</kbd>+<kbd>Z</kbd> and other shortcuts, and any <kbd>Alt</kbd> or <kbd>Win</kbd>
       chord, because they belong to the program and the strip cannot know what they did;</li>
     <li>dictation, a text repair, or a spelling answer, which change the text on the PC itself;</li>
+    <li>leaving a password box, so the dots never turn back into anything;</li>
     <li>switching between Wi-Fi and Bluetooth, or reconnecting.</li>
   </ul>
   <p>It fills again from the next key. An honestly short strip is better than one that is quietly wrong.</p>
+
+  <h3>Passwords</h3>
+  <p>The tablet is held up where others can see it, so in a password box the strip shows a dot for each
+    character instead of the letter:</p>
+  <figure class="strips">
+    <div class="strip" aria-hidden="true">anna@example.com<span class="faint">→</span>••••••••<span class="last">•</span><span class="caret"></span></div>
+    <figcaption>The email address, Tab into the password box, and the password as dots. The dots are all the
+      tablet keeps: the letters are never stored, so nothing can show them later, and leaving the box empties
+      the strip.</figcaption>
+  </figure>
+  <table>
+    <thead><tr><th>Where</th><th>How the tablet knows</th></tr></thead>
+    <tbody>
+      <tr><td>A password box on a web page (Chrome, Edge, Firefox) or in a Windows program</td>
+        <td>The agent on the PC sends a yes or no: the box is a password box. Nothing else about it is sent,
+          and never its text. Needs Wi-Fi with the agent.</td></tr>
+      <tr><td>The lock screen, an administrator prompt, Windows' own password box</td>
+        <td>Always dots. These are the windows where the tablet hands typing over to Bluetooth, and what is
+          typed there is a PIN or a password.</td></tr>
+      <tr><td>Anything else: a box only made to look like a password box, a remote desktop, any box over
+        Bluetooth alone</td>
+        <td>Nothing on the PC can say. Add <strong>Hide typing</strong> to the row (Settings → Buttons beside
+          the pad) and tap it: dots until you tap it again or another window comes to the front.</td></tr>
+    </tbody>
+  </table>
+  <p>The word that the cursor is in a password box arrives a moment after the cursor got there, so the
+    letters typed in that moment are turned into dots too, back to the Tab or click that moved into the
+    box.</p>
 
   <h3>Where it shows, and where to switch it off</h3>
   <p>It works over both Wi-Fi and Bluetooth, because it records what was sent, whichever way it went. Over
