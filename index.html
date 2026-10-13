@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Standinkey</title>
-  <meta name="description" content="Your Android tablet as a keyboard and mouse for your Windows PC.">
+  <meta name="description" content="Your Android tablet as a keyboard, mouse pad and microphone for your Windows PC — over Wi-Fi and Bluetooth at once, so it types everywhere, from your documents to the sign-in screen.">
   <link rel="icon" href="logo.png">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -14,35 +14,499 @@
     <img src="logo.png" alt="">
     <div>
       <h1>Standinkey</h1>
-      <p class="lede">Your Android tablet as a keyboard and mouse for your Windows PC.</p>
+      <p class="lede">Your Android tablet as a keyboard, mouse pad and microphone for your Windows PC.</p>
     </div>
   </header>
 
-  <p>Standinkey turns a tablet into a full keyboard, a mouse pad and a microphone for the PC in front of you.
-    It types in every language the PC has installed, knows the shortcuts of the program you are in,
-    and lets you dictate — the PC does the listening, locally, with no cloud service.</p>
+  <p>Standinkey turns a tablet into the keyboard and mouse of the PC in front of you. Every key shows the
+    character that PC will actually type, in whatever language it is on. The keys show what each shortcut does
+    in the program you are using. You can dictate, and the PC itself does the listening, with no cloud
+    service. It reaches the PC two ways at once, over your Wi-Fi and as a Bluetooth keyboard, which is why it
+    still types where remote keyboards usually give up: the Windows sign-in screen, an administrator prompt,
+    or a password box.</p>
 
+  <figure class="wide">
+    <img src="img/keyboard.webp" width="1600" height="965" alt="The Standinkey keyboard on a tablet: a status line, a row of controls, a tray of buttons, a small mouse pad, and a full keyboard with function keys on the digits.">
+    <figcaption>The whole board. The status line shows the PC, both connections, the program in front and the PC's language. The mouse pad sits top right, with the button tray beside it.</figcaption>
+  </figure>
+
+  <nav class="toc" aria-label="Contents">
+    <ol>
+      <li><a href="#parts">Two programs, one keyboard</a></li>
+      <li><a href="#paths">Wi-Fi and Bluetooth, together</a></li>
+      <li><a href="#why-both">Why both beats either one</a></li>
+      <li><a href="#keyboard">A keyboard that matches the PC</a></li>
+      <li><a href="#shortcuts">Shortcuts with names</a></li>
+      <li><a href="#mouse">The mouse pad</a></li>
+      <li><a href="#tray">Buttons, scripts and the typed line</a></li>
+      <li><a href="#dictation">Dictation</a></li>
+      <li><a href="#repair">Repairing text</a></li>
+      <li><a href="#devices">Several devices</a></li>
+      <li><a href="#edge-cases">Edge cases, and how each is handled</a></li>
+      <li><a href="#privacy">Privacy and security</a></li>
+      <li><a href="#start">Getting started</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="parts">Two programs, one keyboard</h2>
   <div class="cards">
     <div class="card">
-      <h3>Standinkey for Windows</h3>
-      <p>The small program on the PC that the tablet talks to over your Wi-Fi. Free from the Microsoft Store.</p>
+      <h3>Standinkey for Android</h3>
+      <p>The keyboard itself, the mouse pad and the microphone. It draws its own keys instead of using Android's
+        keyboard, because the whole point is to control what each key says.</p>
     </div>
     <div class="card">
-      <h3>Standinkey for Android</h3>
-      <p>The keyboard itself. Works with the PC program over Wi-Fi, or as an ordinary Bluetooth keyboard with nothing installed.</p>
+      <h3>Standinkey for Windows</h3>
+      <p>A small program in the notification area, the <em>agent</em>. The tablet talks to it over your Wi-Fi.
+        It types what the tablet sends, and it tells the tablet what the PC is doing. Free from the Microsoft Store.</p>
+    </div>
+  </div>
+  <p>The Windows program is optional. Without it the tablet is still an ordinary Bluetooth keyboard and mouse
+    for a PC, a TV, or anything else that takes one. With it, the tablet becomes far more, and the rest of
+    this page explains what changes.</p>
+
+  <figure class="wide">
+    <img src="img/welcome.webp" width="1600" height="965" loading="lazy" alt="The first screen of the app, asking how the tablet should reach the PC: Connect to a Windows PC, or Use as a Bluetooth keyboard.">
+    <figcaption>A new install asks one question and offers both answers. Either can be added later.</figcaption>
+  </figure>
+
+  <h2 id="paths">Wi-Fi and Bluetooth, together</h2>
+  <p>The two connections are different in kind, not only in transport, and that difference shapes everything else.</p>
+
+  <div class="diagram" role="img" aria-label="Diagram: the tablet reaches the PC over two lanes. The Wi-Fi lane goes to the agent and carries characters; the Bluetooth lane goes straight to Windows and carries key positions.">
+    <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg">
+      <rect class="box" x="10" y="80" width="150" height="140" rx="14"/>
+      <text x="85" y="140" text-anchor="middle">Tablet</text>
+      <text x="85" y="162" text-anchor="middle" class="small">Standinkey</text>
+
+      <rect class="box" x="520" y="20" width="190" height="260" rx="14"/>
+      <text x="615" y="48" text-anchor="middle">Windows PC</text>
+      <rect class="box" x="540" y="66" width="150" height="62" rx="10"/>
+      <text x="615" y="94" text-anchor="middle">Agent</text>
+      <text x="615" y="114" text-anchor="middle" class="small">types as Unicode</text>
+      <rect class="box" x="540" y="172" width="150" height="86" rx="10"/>
+      <text x="615" y="198" text-anchor="middle">Windows input</text>
+      <text x="615" y="218" text-anchor="middle" class="small">sign-in, prompts,</text>
+      <text x="615" y="236" text-anchor="middle" class="small">every window</text>
+
+      <path class="wifi" d="M160 120 C 300 120, 380 97, 540 97"/>
+      <text x="350" y="86" text-anchor="middle" class="wifi-t">Wi-Fi · characters</text>
+      <text x="350" y="134" text-anchor="middle" class="small">“я”, “é”, “😀” arrive as themselves</text>
+
+      <path class="bt" d="M160 180 C 300 180, 380 215, 540 215"/>
+      <text x="350" y="245" text-anchor="middle" class="bt-t">Bluetooth · key positions</text>
+      <text x="350" y="267" text-anchor="middle" class="small">“the third key of the top row”</text>
+
+      <path class="wifi" d="M615 128 L615 172" stroke-dasharray="0"/>
+    </svg>
+  </div>
+
+  <h3>Over Wi-Fi, the tablet sends characters</h3>
+  <p>Tap <kbd>я</kbd> and the agent puts <em>я</em> into the PC directly, as a Unicode character. The PC's
+    keyboard language plays no part, so the tablet can be on Russian while the PC sits on English and the text
+    still comes out right. Cyrillic and Latin can share one sentence with no switching anywhere, and accents
+    and emoji arrive as themselves. The agent also talks back: which program is in front, which language the
+    PC is on, Caps Lock, whether the PC is locked, whether the speakers are muted.</p>
+
+  <h3>Over Bluetooth, the tablet sends key positions</h3>
+  <p>To the PC, the tablet is just a keyboard: it presses "the key third from the left in the top row", and
+    Windows decides what that key means from its current language. Nothing has to be installed, and Windows
+    accepts it everywhere a physical keyboard works, including the sign-in screen. The price is that the
+    tablet has to know which language the PC is on, and Bluetooth gives nothing back except the Caps Lock
+    light.</p>
+
+  <figure class="narrow">
+    <img src="img/paths.webp" width="1120" height="1000" loading="lazy" alt="The 'Where keystrokes go' sheet: the selected PC, a TV, and two paths — the agent over Wi-Fi, in use, and the Bluetooth keyboard, also connected.">
+    <figcaption>Tap the device name to see both paths. Here both are connected, Wi-Fi is in use, and Bluetooth waits ready. A TV is paired too.</figcaption>
+  </figure>
+
+  <h2 id="why-both">Why both beats either one</h2>
+  <p>Each path fails exactly where the other one works. Standinkey keeps <strong>both connected all the
+    time</strong>. Wi-Fi carries normal use, and Bluetooth stands by, already paired and connected, for the
+    moments Wi-Fi cannot reach.</p>
+
+  <div class="cards wide">
+    <div class="card wifi">
+      <h3>Wi-Fi alone</h3>
+      <p>Comfortable until the moment it matters:</p>
+      <ul>
+        <li>Nothing reaches the <strong>sign-in screen</strong> once the PC locks</li>
+        <li>Nothing reaches an <strong>administrator prompt</strong> or a Windows Security password box</li>
+        <li>Nothing reaches a window <strong>running as administrator</strong></li>
+        <li>Remote desktops, virtual machines and many games <strong>discard</strong> its characters</li>
+        <li>Works only where the agent is installed and running</li>
+      </ul>
+    </div>
+    <div class="card bt">
+      <h3>Bluetooth alone</h3>
+      <p>Reaches everything, but blind:</p>
+      <ul>
+        <li>The tablet must <strong>guess the PC's language</strong>; if it guesses wrong, every letter is wrong</li>
+        <li>No shortcut names, no dictation, no text repair</li>
+        <li>No volume or media keys, no absolute pointing</li>
+        <li>Knows nothing about the PC: not the program in front, nor whether it is locked</li>
+        <li>Only the languages the tablet has been told about</li>
+      </ul>
+    </div>
+    <div class="card both">
+      <h3>Both together</h3>
+      <p>Each one covers the other's gaps:</p>
+      <ul>
+        <li>Wi-Fi does the typing; Bluetooth is <strong>already connected</strong> when it is needed</li>
+        <li>The agent <strong>says when to switch</strong>: on lock, on a protected prompt, on an admin window</li>
+        <li>The agent <strong>teaches Bluetooth the PC's real layouts</strong>, so it types every key right</li>
+        <li>The agent <strong>corrects Bluetooth's language guess</strong> whenever Wi-Fi is up</li>
+        <li>The switch takes a fraction of a second, and the tablet shows which path is in use</li>
+      </ul>
     </div>
   </div>
 
-  <h2>In 24 languages</h2>
-  <p>English, Deutsch, Español and Русский are built in; twenty more arrive as free language packs —
-    both on the tablet and on the PC.</p>
+  <div class="callout">
+    <p><strong>Why "already connected" matters.</strong> Windows sends no warning before it locks. The agent
+      only hears about the lock after it has happened, and from that instant its typing silently goes nowhere.
+      Pairing and connecting Bluetooth then would take seconds, and you would be typing a password into
+      nothing. Because the Bluetooth link is already up, the switch is just a flag flipped on the tablet, in
+      roughly 50 to 200 ms. At most the one key in flight is lost.</p>
+  </div>
 
-  <h2>Private by design</h2>
-  <p>No account, no advertising, no analytics. What you type goes from your tablet to your PC on your own
-    network and nowhere else. <a href="privacy.html">Privacy policy</a></p>
+  <table>
+    <thead><tr><th>What you want to do</th><th>Wi-Fi</th><th>Bluetooth</th></tr></thead>
+    <tbody>
+      <tr><td>Type into ordinary programs</td><td class="y">yes</td><td class="y">yes</td></tr>
+      <tr><td>Type any language regardless of the PC's setting</td><td class="y">yes</td><td class="n">as set on the PC</td></tr>
+      <tr><td>Mixed scripts, accents, emoji in one go</td><td class="y">yes</td><td class="n">no</td></tr>
+      <tr><td>Windows sign-in screen, administrator prompts</td><td class="n">no</td><td class="y">yes</td></tr>
+      <tr><td>Windows Security password boxes, admin windows</td><td class="n">no</td><td class="y">yes</td></tr>
+      <tr><td>Remote desktop, VNC, virtual machines, raw-input games</td><td class="n">no</td><td class="y">yes</td></tr>
+      <tr><td>A TV or any device with no agent</td><td class="n">no</td><td class="y">yes</td></tr>
+      <tr><td>Mouse: move, click, drag, scroll, zoom</td><td class="y">yes</td><td class="y">yes</td></tr>
+      <tr><td>Absolute pointing (pad maps to the whole screen)</td><td class="y">yes</td><td class="n">no</td></tr>
+      <tr><td>Volume, mute, play/pause</td><td class="y">yes</td><td class="n">no</td></tr>
+      <tr><td>Shortcut names for the program in front</td><td class="y">yes</td><td class="n">no</td></tr>
+      <tr><td>Dictation, text repair, starting programs</td><td class="y">yes</td><td class="n">no</td></tr>
+      <tr><td>Caps Lock shown on the tablet</td><td class="y">yes</td><td class="y">yes, from the LED</td></tr>
+      <tr><td>Key scripts</td><td class="y">yes</td><td class="y">yes, except starting programs</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="keyboard">A keyboard that matches the PC</h2>
+  <p>The keys are not drawn from a list the app ships with. The agent reads <strong>every keyboard layout
+    installed on the PC</strong>: what each key types at each of six shift levels, with dead keys marked. The
+    tablet then builds a board for each of them. Russian comes out as ЙЦУКЕН because the PC put й on the Q
+    key, not because the app has heard of Russian. German has its ä, ö and ü where a German keyboard has
+    them. The 🌐 key steps through exactly the languages that PC has, and the board follows when the PC
+    switches language by itself.</p>
+  <p>Around that sits what phone keyboards got right:</p>
+  <ul>
+    <li><strong>Hold a key</strong> for its alternates: accents, what the PC puts on AltGr, the F-key on a digit. Slide to one and let go.</li>
+    <li><strong>Slide along Space</strong> to move the cursor; with Shift held, the slide selects.</li>
+    <li><strong>Modifiers</strong>: hold one while you tap a key for a chord, tap once to latch it for the next key, double-tap to lock it. A double tap on Shift asks the PC for Caps Lock.</li>
+    <li><strong>Slide on the left Shift</strong> to preview another language: the whole board turns into it, and letting go there switches.</li>
+    <li><strong>Fn</strong> turns the digits into F1–F12 and the arrows into Home, End, PgUp and PgDn. <strong>?123</strong> opens a numpad with every symbol the board has no room for.</li>
+    <li><strong>Compose</strong> opens a text field on the tablet with Android's own autocorrect and swipe typing. What you write there goes to the PC in one piece when you send it.</li>
+  </ul>
+
+  <h2 id="shortcuts">Shortcuts with names</h2>
+  <figure class="wide">
+    <img src="img/shortcuts.webp" width="1600" height="965" loading="lazy" alt="The keyboard with Ctrl held: letters become capitals showing the Latin key, and under C it says Interrupt, under V Paste, under the arrows Word left and Word right.">
+    <figcaption>Ctrl held, with Windows Terminal in front. Under C it says <em>Interrupt</em>, because in a terminal that is what Ctrl+C does.</figcaption>
+  </figure>
+  <p>Hold Ctrl, Alt or Win and the board becomes a map of shortcuts. Each letter shows the Latin key it will
+    press, because shortcuts are made of positions: Ctrl+C is the same key whether the PC is on English or
+    on Russian, where that key types с. Under each one is <strong>what that shortcut does in the program in
+    front</strong>, in the tablet's language: Copy, New tab, DevTools. The names follow the program, so a
+    terminal says <em>Interrupt</em> where an editor says <em>Copy</em>, and Photoshop does not claim
+    Ctrl+← moves by a word, because there it does not. Programs the catalogue doesn't know get Windows'
+    usual meanings. Keys that have no position to press, such as the numpad's symbols, fade while a
+    modifier is down.</p>
+
+  <h2 id="mouse">The mouse pad</h2>
+  <figure class="wide">
+    <img src="img/pad.webp" width="1600" height="965" loading="lazy" alt="The mouse pad expanded to fill the screen, with Ctrl, Alt, Shift, Win and Space on the left edge, a column of buttons — Undo, Redo, Select all, Cut, Copy, Paste, Play, Mute, Vol − and Vol + — and scroll strips along the right and bottom edges.">
+    <figcaption>The pad expanded. Modifiers sit on the edge for the free hand; the column beside it changes with the program in front.</figcaption>
+  </figure>
+  <p>The pad is not an imitation of a laptop touchpad. It is a large surface whose gestures mean mouse
+    actions on the pointer Windows already has.</p>
+  <table>
+    <thead><tr><th>Gesture</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>One finger: move · tap · hold still, then move</td><td>Move the pointer · left click · drag</td></tr>
+      <tr><td>Two fingers: slide · flick · pinch · tap</td><td>Scroll, any direction · scroll that keeps going · zoom · right click</td></tr>
+      <tr><td>Three fingers: tap · hold still, then move</td><td>Middle click · right drag</td></tr>
+      <tr><td>Four fingers swipe left or right</td><td>Back · forward</td></tr>
+      <tr><td>Hold Shift, Ctrl or Space on the edge, then drag</td><td>Select · add to a selection · pan in Photoshop</td></tr>
+    </tbody>
+  </table>
+  <p>A gesture counts the most fingers it ever had, so a stray extra finger costs nothing. Three fingers
+    sweeping together do nothing on purpose: on many tablets that sweep takes a screenshot. On the
+    full-size pad, the strips along the side and bottom edges scroll with one finger.</p>
+  <p>Expanded, the pad has a column of buttons that <strong>changes with what is in front</strong>:</p>
+  <ul>
+    <li>in a browser: back, forward, the tabs, and "open in new tab" or "in a new window" (press it, then tap the link);</li>
+    <li>on a video site or in a player: play, seek, full screen and the sound;</li>
+    <li>in File Explorer: back, forward and the folder above;</li>
+    <li>on the desktop or taskbar: task view, the last window, Explorer, search, notifications and Settings;</li>
+    <li>anywhere else: undo, redo, select all, cut, copy, paste and the sound.</li>
+  </ul>
+  <p>After a right click, the menu's own keys take the column for a few seconds: up, down, into a submenu
+    and pick.</p>
+  <p>Collapsed, the small pad <strong>rests for half a second after each key</strong>. It dims and
+    ignores touches, so a palm or a thumb landing on it mid-sentence does not click somewhere else in
+    your document.</p>
+
+  <h2 id="tray">Buttons, scripts and the typed line</h2>
+  <p>Beside the small pad is a tray, like the row a laptop keeps above its digits:</p>
+  <ul>
+    <li>a <strong>volume knob</strong>: turn it to change the volume, tap it to mute;</li>
+    <li>buttons for media, screenshot, lock, emoji and the clipboard history;</li>
+    <li>the text repairs;</li>
+    <li>your own <strong>scripts</strong>.</li>
+  </ul>
+  <p>The two mute buttons show the PC's real state, read from Windows, rather than only toggling. When nobody
+    can know the state, over Bluetooth for example, they say so instead of pretending.</p>
+  <p>A script is a few lines the tablet plays into the PC:</p>
+  <pre><code>choose Server: web | db | cache
+Ctrl+Alt+T
+type ssh {Server}.example.com
+Enter</code></pre>
+  <p>The editor builds scripts from chips, and ⏺ Record writes down what you do. The language is small on
+    purpose:</p>
+  <ul>
+    <li>keys, text, waits, clicks and scrolls, and starting a program;</li>
+    <li>questions that stop and wait for you;</li>
+    <li>no coordinates, because a click at a fixed point is how recorded macros rot.</li>
+  </ul>
+  <p>A script stops within one step when you press Stop.</p>
+  <p>Typing on glass means watching the keys, not the screen. So a line at the foot of the tray, just above the
+    keys, shows <strong>the last few dozen characters you typed</strong>, with the cursor, as the PC should
+    now have them. It follows arrows, word jumps, selections and Backspace. It is what the tablet sent, not
+    text read back from the PC, so it clears itself whenever the PC's text may have changed without a key
+    from the tablet: a click, a paste, dictation, another window.</p>
+
+  <h2 id="dictation">Dictation</h2>
+  <p>Tap 🎤 and talk. A level meter moves with your voice, and the words appear on the tablet as the PC
+    hears them. Tap again, and what you said is typed into the PC with punctuation and capitals. The tablet
+    only records. The <strong>PC recognises the speech, locally</strong>, with NVIDIA's Nemotron streaming
+    model through sherpa-onnx: one model for English, Russian and Spanish, which detects the language
+    itself. No audio leaves your network, and there is no account and no cloud service. The model, about
+    475 MB, downloads once, the first time you use it.</p>
+
+  <h2 id="repair">Repairing text</h2>
+  <p>Select some text on the PC, or put the cursor after a word, and tap one button:</p>
+  <ul>
+    <li><strong>Mistyped</strong>: <code>ghbdtn</code> → <code>привет</code>, text typed in the wrong
+      layout. The conversion uses the PC's own layout tables, so it is exact for whatever languages that PC
+      has.</li>
+    <li><strong>Case</strong>: cycles abc → Abc → ABC. <strong>Translit</strong>: Cyrillic ⇄ Latin.</li>
+    <li><strong>Unwrap</strong>: joins lines hard-wrapped by a PDF or an email, and keeps the paragraphs.</li>
+    <li><strong>Mojibake</strong>: repairs text decoded with the wrong encoding, like <code>Ïðèâåò</code>, back into <code>Привет</code>.</li>
+    <li><strong>Spelling</strong>: fixes what Windows' dictionary is sure about. Where two real words both
+      fit, it asks on the tablet, showing the sentence around the word.</li>
+  </ul>
+  <p>A local language model ranks the candidates, but it can only pick from words the dictionary offers, so
+    it never rewrites your sentence.</p>
+
+  <h2 id="devices">Several devices</h2>
+  <p>The tablet keeps a list: PCs with the agent, TVs, anything that pairs with a Bluetooth keyboard. It
+    types into <strong>one at a time</strong>, and choosing another in the header switches both connections
+    over. A PC that reconnects by itself while the TV is chosen is politely disconnected again, since two
+    hosts cannot share one keyboard. Each device keeps its own languages and settings. One PC can also have
+    several tablets and phones paired.</p>
+  <p>The app speaks 24 languages. English, German, Spanish and Russian are built in. Twenty more come as
+    free language packs, on the tablet and on the PC alike.</p>
+
+  <h2 id="edge-cases">Edge cases, and how each is handled</h2>
+  <p>Most of the work in a remote keyboard is in the situations where the easy design breaks. These are the
+    ones Standinkey meets, and what it does about each. The tag names the path the case is about, or
+    the one that comes to the rescue.</p>
+
+  <details>
+    <summary>The PC locks, and you need to type your password <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>Once Windows locks, the sign-in screen runs on a separate, protected desktop that no program can type
+        into. The agent's typing is not refused; Windows reports success and drops it. And Windows gives
+        no warning beforehand: the agent learns about the lock only after it has happened.</p>
+      <p>So the agent tells the tablet the moment it learns, and the tablet moves to Bluetooth by itself. It
+        says so at the top of the screen. Bluetooth was already connected, so nothing has to be set up. On
+        unlock, the agent says so and typing returns to Wi-Fi.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>An administrator prompt (UAC) appears <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>The "Do you want to allow this app…" prompt also runs on the protected desktop, but unlike the lock,
+        it raises no event at all. The agent checks which desktop is receiving input, notices the switch and
+        hands over to Bluetooth the same way, then hands back when the prompt closes.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>A Windows Security password box ignores the typing <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>Some password prompts are the hardest case: a browser asking for your Windows password to show a
+        saved password, or a credential request. They run on the ordinary desktop at ordinary privilege, so
+        nothing above catches them. Yet Windows refuses typed-in input to them on purpose, because
+        protecting passwords from programs that type is exactly their job. The agent recognises these
+        windows and reports that its input "will not land here". The tablet then switches to Bluetooth,
+        which Windows treats as a real keyboard.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>A program running as administrator <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>Windows does not let an ordinary program type into a program running as administrator, and it does
+        not even report an error. It just drops the input. The agent runs <em>without</em> administrator
+        rights on purpose: it accepts keystrokes from the network, and giving it more power would widen what
+        those keystrokes could reach. Instead it notices when the window in front is elevated and hands
+        that window to Bluetooth.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Remote desktops, virtual machines and games <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>The Wi-Fi path types characters, and Windows delivers those as key events that carry a character
+        but no key position. Programs that read the keyboard at a lower level throw them away: remote
+        desktop and VNC clients, virtual machines, and games using raw input. Worse, nobody can tell. Windows
+        reports success and the character dies inside the program.</p>
+      <p>Since the agent cannot detect this, the tablet asks you instead, once per program. In the paths
+        sheet a switch reads "<em>this program</em> takes only key presses". Turn it on, and that program
+        gets Bluetooth key presses from then on, on every PC, while everything else stays on Wi-Fi.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>The connection drops, and nobody knows why <span class="tag wifi">Wi-Fi</span></summary>
+    <div>
+      <p>From the tablet, three different situations look identical: the PC is locked, the Wi-Fi hiccuped,
+        or the PC went to sleep. Switching paths on a hunch would bounce between them with every network
+        glitch, and you would never know which one your next key went down.</p>
+      <p>So the tablet switches by itself only when the PC states a fact, such as "I locked" or "this window
+        refuses me". A plain dropped connection is never resolved silently. The tablet asks, and shows both
+        paths, because you can see your screen and it cannot. Meanwhile it keeps reconnecting, with
+        backoff, and tries again the moment you wake the tablet or come back to the app.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Bluetooth types the wrong letters <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>Over Bluetooth the PC's language decides what each key types, and the tablet cannot see which one
+        that is. It keeps a <em>belief</em> instead. 🌐 moves the tablet to the next language on your list
+        and presses Windows' own switching hotkey the matching number of times. When the agent is connected,
+        it quietly corrects the belief to what the PC really is. When the two disagree, the status line
+        shows a warning such as <strong>PC: ES ⚠</strong>, and the paths sheet has one button per language
+        to say where the PC actually is.</p>
+      <p>The layouts themselves come from the agent too. One PC in testing reported itself as US English
+        but had a Spanish physical layout. On it, nine of eleven punctuation keys typed something else:
+        <code>;</code> arrived as <code>ñ</code>. That is a password typed wrong at the sign-in screen with no
+        sign of it. Since then, Bluetooth types using the PC's real key maps, which the agent sends while
+        Wi-Fi is up. Four common layouts are built in for PCs without the agent.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Android quietly disconnects the Bluetooth keyboard <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>Android withdraws an app's Bluetooth keyboard as soon as the app counts as "in the background". That
+        includes when the screen turns off, which is exactly when a PC tends to lock. Standinkey runs a
+        foreground service, with its notification, so the keyboard stays registered. It re-registers if the
+        system withdraws it anyway, and offers itself again to the last PC it had.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Keys sent too fast are lost <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>A PC whose Bluetooth is dozing in a power-saving mode drops reports that arrive faster than it wakes
+        up. A human typing never notices, but a script or a language switch that presses several keys in a
+        burst would lose some. So bursts go out paced, one at a time, on both paths.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Ctrl+C in a terminal <span class="tag wifi">Wi-Fi</span></summary>
+    <div>
+      <p>Repairing text works by copying the selection. In a terminal, Ctrl+C does not copy. It stops
+        whatever is running. So the text repairs refuse a terminal window before sending anything, rather than
+        interrupting your build or your server. The shortcut names say the same thing on the key.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Volume and media keys over Bluetooth <span class="tag bt">Bluetooth</span></summary>
+    <div>
+      <p>The Bluetooth device Standinkey presents is a keyboard and a mouse, not a media remote, so a volume
+        key sent that way would arrive as nothing at all. The tablet refuses them over Bluetooth and says why,
+        instead of sending keys that silently vanish. Over Wi-Fi the agent handles them, and reports back whether the
+        speakers and microphone are muted.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Reading the PC's layouts without disturbing your typing <span class="tag wifi">Wi-Fi</span></summary>
+    <div>
+      <p>The Windows call that asks what a key types can, as a side effect, leave a half-finished accent
+        waiting. Your next real keystroke would then come out accented. The agent uses the variant that
+        leaves the keyboard state alone, checks before and after each read that nothing was left pending,
+        and stops reading for the session if Windows ever ignores the request.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>What it cannot do</summary>
+    <div>
+      <p>BIOS menus, the boot menu and a BitLocker PIN come before Windows starts. An Android Bluetooth
+        keyboard cannot reach them, and nothing here pretends it can. Gaming with low latency and
+        anti-cheat systems are out of scope too.</p>
+      <p>And glass has no feel: you will always look at the keys. That is accepted, and it is the reason the
+        keys must say exactly what they will type.</p>
+    </div>
+  </details>
+
+  <h2 id="privacy">Privacy and security</h2>
+  <ul>
+    <li><strong>No account, no advertising, no analytics.</strong> Nothing is sent anywhere but between your
+      tablet and your PC, on your own network.</li>
+    <li><strong>Pairing is deliberate.</strong> The PC shows a six-digit PIN that changes every few minutes,
+      and a fingerprint to compare on the tablet. After that the connection is encrypted (TLS) and pinned to
+      that PC's certificate. Anything that can talk to the agent can type into your PC, so nothing else can
+      talk to it.</li>
+    <li><strong>No keylogger.</strong> The text repairs read only the selection, and only when you ask,
+      using the same Ctrl+C you could have pressed. There is no keyboard hook and nothing is kept between
+      requests. The repaired text never crosses the network: the agent reads it and writes it back itself.</li>
+    <li><strong>Speech stays on the PC.</strong> Dictation is recognised locally. So is the spelling model,
+      which only reorders words the dictionary already offered.</li>
+    <li><strong>Unelevated by design.</strong> The agent runs as you, not as administrator. Bluetooth
+      handles the windows it cannot reach.</li>
+    <li>A paired tablet can type at the sign-in screen. That is the feature, and also the risk, so pair only
+      tablets you trust. The <a href="privacy.html">privacy policy</a> has the details.</li>
+  </ul>
+
+  <h2 id="start">Getting started</h2>
+  <h3>With the PC program (recommended)</h3>
+  <ol>
+    <li>Install <strong>Standinkey</strong> on the PC from the Microsoft Store. A keyboard icon appears in the notification area.</li>
+    <li>Right-click it and choose <strong>Pair a tablet…</strong>. It shows a PIN.</li>
+    <li>On the tablet, choose <strong>Connect to a Windows PC</strong>. The PC is found on the network; enter the PIN and check the fingerprint.</li>
+    <li>Turn on <strong>Act as a Bluetooth keyboard</strong> in the tablet's Settings → Connection, and pair the tablet once from Windows' Bluetooth settings. Now both paths are up.</li>
+  </ol>
+  <p class="muted">Windows may ask once for network access, for TCP 8765 (the tablet's connection) and UDP
+    5353 (finding the PC automatically). If your home network is marked <em>public</em>, switch it to
+    <em>private</em>. The tablet can also be pointed at the PC's address by hand.</p>
+  <h3>Bluetooth only</h3>
+  <ol>
+    <li>On the tablet, choose <strong>Use as a Bluetooth keyboard</strong> and switch it on.</li>
+    <li>On the PC or TV, open its Bluetooth settings and pair the device called <strong>Standinkey</strong>.</li>
+  </ol>
+  <p class="muted">Requirements: an Android tablet running Android 9 or later, used in landscape,
+    and Windows 10 1809 or later on x64 for the PC program.</p>
 
   <h2>Support</h2>
-  <p>Questions and problems: <a href="mailto:info@zenrepublic.es">info@zenrepublic.es</a></p>
+  <p>Questions and problems: <a href="mailto:info@zenrepublic.es">info@zenrepublic.es</a>. The Help page
+    inside the app (Help, top right) covers every control, in your language.</p>
 
   <footer>© 2026 Zen Republic · <a href="privacy.html">Privacy</a></footer>
 </main>
